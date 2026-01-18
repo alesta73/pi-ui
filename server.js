@@ -4,11 +4,8 @@ const path = require('path');
 const app = express();
 const port = 3001;
 
-// 1. SERVE STATIC FILES (The React App)
-// Vite outputs the build to the 'dist' folder.
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// 2. API ROUTES (The Data)
 app.get('/stats', async (req, res) => {
     try {
         const [cpu, cpuTemp, mem, os] = await Promise.all([
@@ -33,8 +30,6 @@ app.get('/docker', async (req, res) => {
     }
 });
 
-// 3. FALLBACK ROUTE
-// If the request isn't for /stats or /docker, send the React app.
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
