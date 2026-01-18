@@ -3,8 +3,44 @@ const si = require("systeminformation");
 const path = require('path');
 const app = express();
 const port = 3001;
+const Docker = require('dockerode');
+const docker = new Docker({socketPath: '/var/run/docker.sock'});
 
+// console.log(docker.getContainer(id));
 app.use(express.static(path.join(__dirname, 'dist')));
+
+
+app.post('/docker/restart/:id', async (req, res)=>{
+    try{
+        const container = docker.getContainer(req.params.id);
+        await container.restart();
+        res.json({message: "Restarted"})
+    }
+    catch(err){
+        res.status(500).json({error: err.message})
+    }
+});
+app.post('/docker/stop/:id', async (req, res)=>{
+    try{
+        const container = docker.getContainer(req.params.id);
+        await container.stop();
+        res.json({message: "Stopped"})
+    }
+    catch(err){
+        res.status(500).json({error: err.message})
+    }
+});
+
+app.post('/docker/start/:id', async (req, res)=>{
+    try{
+        const container = docker.getContainer(req.params.id);
+        await container.start();
+        res.json({message: "Started"})
+    }
+    catch(err){
+        res.status(500).json({error: err.message})
+    }
+});
 
 app.get('/stats', async (req, res) => {
     try {

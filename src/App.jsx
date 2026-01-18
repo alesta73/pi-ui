@@ -3,12 +3,34 @@ import './styles/styles.css'
 import './styles/App.css'
 
 export default function App() {
-  // const si = systeminformation;
-  //state är saker som en komponent behöver minnas/komma ihåg. State finns inuti komponenten.
-  //state = tillstånd.Tillstånd är att count = 0  
-  //setCount används för att uppdatera state, vilket triggar re-render av relevanta element på webbplatsen. 
   const [stats, setStats] = useState(null);
   const [containers, setContainers] = useState([]);
+
+  const restartContainer = (id) => {
+    fetch(`/docker/restart/${id}`, { method: 'POST' })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.message);
+      })
+      .catch(err => console.error(err))
+  }
+
+  const stopContainer = (id) => {
+    fetch(`/docker/stop/${id}`, { method: 'POST' })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.message);
+      })
+      .catch(err => console.log(err))
+  }
+  const startContainer = (id) => {
+    fetch(`/docker/start/${id}`, { method: 'POST' })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.message);
+      })
+      .catch(err => console.log(err))
+  }
 
   const CONTAINER_URLS = {
     'portainer': 'http://docker.pi',
@@ -39,64 +61,54 @@ export default function App() {
         .catch(err => console.error("Docker fetch error:", err));
     };
     fetchData();
-    const intervalId = setInterval(fetchData, 1000 * 30);
+    const intervalId = setInterval(fetchData, 1000 * 10);
     return () => {
       clearInterval(intervalId);
     };
   }, []);
+
   return (
     <>
-      <h1>pi-ui</h1>
+      <h1 className='heading'>pi ui</h1>
       <div className="container flex">
         <div className="stats-card">
           <h2>Network</h2>
           <div className='info'>
+        <p>No Information</p>
+          </div>
+        </div>
+        <div className="stats-card">
+          <h2>System</h2>
+          <div className='info'>
+
             {stats ? (
               (() => {
                 const { uptime } = stats.time;
                 return (
                   <>
-                    {/* <p>Uptime: {uptime}</p> */}
+                    <h3>Cpu</h3>
+                    {/* <p>Cpu Brand: {stats.cpu.brand}</p> */}
+                    <p>CPU Temp: {stats.cpuTemp.main}°C</p>
+                    {/* <p>CPU Vendor: {stats.cpu.vendor}</p> */}
+                    <hr />
+                    <h3>Memory</h3>
+                    <p>RAM total: <TotalMemoryCalculator bytes={stats.memory.total} /> GBs</p>
+                    <div>
+                      <MemoryUsage
+                        total={stats.memory.total}
+                        available={stats.memory.available}
+                      />
+                    </div>
+                    <hr />
                     <h3>Uptime: </h3>
                     <UptimeLogic uptime={uptime} />
                   </>
                 )
-              })()
-            ) : <p>Loading uptime</p>}
+              }
+              )()
+            ) : <>Loading Metrics</>}
           </div>
         </div>
-
-
-           <div className="stats-card">
-           <h2>System</h2>
-            <div className='info'>
-
-            { stats ? (
-            (()=>{
-              return(
-                <>
-                     <h3>Cpu</h3>
-              {/* <p>Cpu Brand: {stats.cpu.brand}</p> */}
-              <p>CPU Temp: {stats.cpuTemp.main}°C</p>
-              {/* <p>CPU Vendor: {stats.cpu.vendor}</p> */}
-              <h3>Memory</h3>
-              <p>RAM total: <TotalMemoryCalculator bytes={stats.memory.total} /> GBs</p>
-              <div>
-                <MemoryUsage
-                  total={stats.memory.total}
-                  available={stats.memory.available}
-                />
-              </div>
-                </>
-              )
-            }
-          )()
-            ): <>Loading Metrics</>}
-            </div>
-        </div>
-
-
-
 
         <div className="stats-card">
           <h2>Hosting</h2>
@@ -121,10 +133,19 @@ export default function App() {
                         {container.state}
                       </span>
                     </p>
-                    
                     {/* <p>Uptime: {container.status}</p> */}
                     {/* <p>Mounts: {}</p> */}
                     {/* <p>Image: {container.image}</p> */}
+
+                    <button className="dockerBtn btnStart" onClick={() => startContainer(container.id)}>
+                      Start
+                    </button>
+                    <button className="dockerBtn btnStop" onClick={() => stopContainer(container.id)}>
+                      Stop
+                    </button>
+                    <button className="dockerBtn btnRestart" onClick={() => restartContainer(container.id)}>
+                      Restart
+                    </button>
                     <hr />
                   </div>
                 )
@@ -136,6 +157,8 @@ export default function App() {
         </div>
       </div>
     </>
+
+
   )
 }
 

@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Iceland&family=Poppins:wght@400;500;600;700&family=Saira+Stencil+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Sixtyfour&display=swap');
 
 /* 1. Design Tokens & Themes */
 :root {
     /* =======================
      Typography
      ======================= */
-    --font-family-sans: "Poppins", sans-serif;
-    --font-size-base: 16px;
+    /* --font-family-sans: "Poppins", sans-serif; */
+    --font-family-sans: "Atkinson Hyperlegible Mono", sans-serif;
+    --font-size-base: 20px;
     --line-height-base: 1.5;
     --font-weight-regular: 400;
     --font-weight-medium: 500;
@@ -126,6 +130,17 @@ a {
     color: var(--color-url)
 }
 
+.heading {
+    margin: 1rem;
+    font-family: "Sixtyfour", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "BLED" 0,
+        "SCAN" 0;
+}
+
 /* 3. Layout (The Container Logic) */
 .container {
     width: 100%;
@@ -192,9 +207,31 @@ a {
     background: var(--color-surface);
 }
 
-.running{
+.running {
     color: var(--color-running);
- }
-.stopped{
+}
+
+.stopped {
     color: var(--color-stopped);
 }
+
+.dockerBtn {
+    padding: 6px;
+    font-size: 17px;
+    border-radius: 15px;
+    margin-right: 7px;
+    margin-bottom: 5px;
+    /* font-weight: bold; */
+    font-family: var(--font-family-sans);
+    background: var(--color-bg-alt);
+    color: var(--color-text);
+    border: 2px solid var(--color-border);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.btnStart:hover{border: 2px solid  var(--color-success)}
+.btnStop:hover{border: 2px solid var(--color-danger)}
+.btnRestart:hover{border: 2px solid var(--color-warning);}
