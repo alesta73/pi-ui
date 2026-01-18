@@ -46,7 +46,7 @@ export default function App() {
   }, []);
   return (
     <>
-      <h1>PRODUCTION UI</h1>
+      <h1>pi-ui</h1>
       <div className="container flex">
         <div className="stats-card">
           <h2>Network</h2>
