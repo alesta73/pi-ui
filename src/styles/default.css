@@ -1,0 +1,159 @@
+/* =========================================
+   Base CSS & Layout
+   ========================================= */
+
+/* 1. Global Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. Design Tokens */
+:root {
+  /* =======================
+     Typography
+     ======================= */
+  --font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --font-family-mono: "JetBrains Mono", "Fira Code", Menlo, monospace;
+  --font-size-base: 16px;
+  --line-height-base: 1.5;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* =======================
+     Spacing Scale (8px grid)
+     ======================= */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem;  /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem;    /* 16px */
+  --space-5: 1.5rem;  /* 24px */
+  --space-6: 2rem;    /* 32px */
+
+  /* =======================
+     Z-index Scale
+     ======================= */
+  --z-low: 10;
+  --z-mid: 100;
+  --z-high: 1000;
+  --z-modal: 10000;
+
+  /* =======================
+     Color Palette — Light Mode
+     ======================= */
+  --neutral-50: #fafafa;
+  --neutral-100: #f4f4f5;
+  --neutral-200: #e4e4e7;
+  --neutral-300: #d4d4d8;
+  --neutral-400: #a1a1aa;
+  --neutral-500: #71717a;
+  --neutral-600: #52525b;
+  --neutral-700: #3f3f46;
+  --neutral-800: #27272a;
+  --neutral-900: #18181b;
+
+  --color-bg: #ffffff;
+  --color-bg-alt: #f7f7f8;
+  --color-surface: #eaeaec;
+  --color-surface-light: #eaeaec;
+  --color-surface-dark: #222; 
+  --color-text: #1b1b1d;
+  --color-text-muted: #55575c;
+  --color-text-dark: #1b1b1d;
+  --color-text-light: #e0e0e0;
+
+  --color-accent: #0078ff;
+  --color-accent-hover: #005fcc;
+  --color-success: #2ecc71;
+  --color-warning: #f1c40f;
+  --color-error: #e74c3c;
+  --color-border: #dcdcdc;
+
+  /* Semantic Mapping */
+  /* --color-primary: var(--color-accent);
+  --color-secondary: var(--neutral-600);
+  --color-danger: var(--color-error);
+  --color-warn: var(--color-warning);
+  --color-ok: var(--color-success); */
+
+  /* Transition */
+  --transition-speed: 0.25s;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121212;
+    --color-bg-alt: #1a1a1a;
+    --color-surface: #222;
+    --color-text: #e0e0e0;
+    --color-text-muted: #aaa;
+  
+    --color-accent: #3b82f6;
+    --color-accent-hover: #2563eb;
+    --color-success: #27ae60;
+    --color-warning: #eab308;
+    --color-danger: #ef4444;
+    --color-border: #2c2c2c;
+  }
+}
+
+/* 3. Base Elements */
+html {
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-sans);
+    color: var(--color-text);
+    /* background-color: var(--color-bg); */
+}
+
+/* 4. Layout Components */
+.container {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* The list starts as a single column by default (mobile-first) */
+/* .list-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    background: var(--color-sidebar);
+} */
+
+/* 5. Responsive Breakpoints */
+@media (min-width: 475px) {
+    .container { max-width: 390px; }
+}
+
+@media (min-width: 640px) {
+    .container { max-width: 555px; }
+    
+    /* Logic: Switch to 2 columns above 640px */
+    .list-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 768px) {
+    .container { max-width: 683px; }
+}
+
+@media (min-width: 1024px) {
+    .container { max-width: 939px; }
+}
+
+@media (min-width: 1280px) {
+    .container { max-width: 1195px; }
+}
+
+@media (min-width: 1536px) {
+    .container { max-width: 1451px; }
+}
+
+/* 6. Utility Classes */
+.text-center { text-align: center; }
+.mt-2 { margin-top: 0.5rem; }
