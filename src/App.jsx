@@ -115,7 +115,13 @@ export default function App() {
                     {displayUrl && (
                       <p>URL: <a href={finalUrl} target="_blank" rel="noreferrer">{displayUrl}</a></p>
                     )}
-                    <p>Status: {container.state}</p>
+
+                    <p>
+                      Status: <span className={container.state === "running" ? "running" : "stopped"}>
+                        {container.state}
+                      </span>
+                    </p>
+                    
                     {/* <p>Uptime: {container.status}</p> */}
                     {/* <p>Mounts: {}</p> */}
                     {/* <p>Image: {container.image}</p> */}

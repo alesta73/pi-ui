@@ -68,6 +68,9 @@
     --color-error: #e74c3c;
     --color-border: #dcdcdc;
 
+    --color-running: #228b22;
+    --color-stopped: #b22222;
+
     /* Semantic Mapping */
     /* --color-primary: var(--color-accent);
   --color-secondary: var(--neutral-600);
@@ -95,6 +98,9 @@
         --color-warning: #eab308;
         --color-danger: #ef4444;
         --color-border: #2c2c2c;
+
+        --color-running: #50c878;
+        --color-stopped: #ff4d4d;
     }
 }
 
@@ -184,4 +190,11 @@ a {
     border-radius: 1rem;
     padding: var(--space-4);
     background: var(--color-surface);
+}
+
+.running{
+    color: var(--color-running);
+ }
+.stopped{
+    color: var(--color-stopped);
 }
